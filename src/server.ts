@@ -1,13 +1,35 @@
 import fastify from 'fastify'
-import { z } from 'zod'
+import { string, z } from 'zod'
+import { PrismaClient } from '@prisma/client'
 
 const app = fastify()
 
-app.post('/events', (request, reply) => {
-
-  return 'Hello'
+const prisma = new PrismaClient({
+  log: ['query'],
 })
 
+app.post('/events', async (request, reply) => {
+  const createdEventSchema = z.object({
+    title: z.string().min(4),
+    details: z.string().nullable(),
+    maximumAttendees: z.number().int().positive().nullable()
+  })
+
+  const data = createdEventSchema.parse(request.body)
+
+  const event = await prisma.event.create({
+    data: {
+      title: data.title,
+      details: data.details,
+      maximumAttendees: data.maximumAttendees,
+      slug: new Date().toISOString()
+    },
+  })
+
+  return reply.status(201).send({ eventId: event.id })
+
+  // return { eventId: event.id }
+})
 
 app.listen({ port: 3333 }).then(() => {
   console.log('HTTP server running')
