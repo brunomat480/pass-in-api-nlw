@@ -6,3 +6,13 @@ Content-Type: application/json
   "details": "Um evento para quem é apaixonado por programação",
   "maximumAttendees": 100
 }
+
+###
+
+POST http://localhost:3333/events/b183e643-f600-44e4-abf5-060cfbd16575/attendees
+Content-Type: application/json
+
+{
+  "name": "Bruno José",
+  "email": "bruno@gmail.com"
+}
