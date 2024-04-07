@@ -27,4 +27,8 @@ GET http://localhost:3333/attendees/2/badge
 
 ###
 
-GET http://localhost:3333/attendees/2/check-in
+GET http://localhost:3333/attendees/4/check-in
+
+###
+
+GET http://localhost:3333/events/31cc920d-a352-4daa-8fdb-161f56ddca05/attendees?query=bruno
